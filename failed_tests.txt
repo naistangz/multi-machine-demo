@@ -1,0 +1,57 @@
+Package "mongodb-org"
+  is expected to be installed with version "3.2.20" (FAILED - 1)
+
+Service "mongod"
+  is expected to be running (FAILED - 2)
+  is expected to be enabled (FAILED - 3)
+
+Port "27017"
+  is expected to be listening on 0.0.0.0 (FAILED - 4)
+
+Failures:
+
+  1) Package "mongodb-org" is expected to be installed with version "3.2.20"
+     On host `db'
+     Failure/Error: it { should be_installed.with_version('3.2.20') }
+       expected Package "mongodb-org" to be installed with version "3.2.20"
+       sudo -p 'Password: ' /bin/sh -c dpkg-query\ -f\ \'\$\{Status\}\ \$\{Version\}\'\ -W\ mongodb-org\ \|\ grep\ -E\ \'\^\(install\|hold\)\ ok\ installed\ 3\\.2\\.20\$\'
+
+     # ./spec/db/db_spec.rb:4:in `block (2 levels) in <top (required)>'
+
+  2) Service "mongod" is expected to be running
+     On host `db'
+     Failure/Error: it { should be_running }
+       expected Service "mongod" to be running
+       sudo -p 'Password: ' /bin/sh -c systemctl\ is-active\ mongod
+       inactive
+
+     # ./spec/db/db_spec.rb:8:in `block (2 levels) in <top (required)>'
+
+  3) Service "mongod" is expected to be enabled
+     On host `db'
+     Failure/Error: it { should be_enabled }
+       expected Service "mongod" to be enabled
+       sudo -p 'Password: ' /bin/sh -c systemctl\ --quiet\ is-enabled\ mongod
+
+     # ./spec/db/db_spec.rb:9:in `block (2 levels) in <top (required)>'
+
+  4) Port "27017" is expected to be listening on 0.0.0.0
+     On host `db'
+     Failure/Error: it { should be_listening.on('0.0.0.0') }
+       expected Port "27017" to be listening on 0.0.0.0
+       sudo -p 'Password: ' /bin/sh -c ss\ -tunl\ \|\ grep\ -E\ --\ \\\ \\\\\\\*:27017\\\ \\\|\\\ 0\\\\.0\\\\.0\\\\.0:27017\\\
+
+     # ./spec/db/db_spec.rb:13:in `block (2 levels) in <top (required)>'
+
+Finished in 4.42 seconds (files took 25.04 seconds to load)
+4 examples, 4 failures
+
+Failed examples:
+
+rspec ./spec/db/db_spec.rb:4 # Package "mongodb-org" is expected to be installed with version "3.2.20"
+rspec ./spec/db/db_spec.rb:8 # Service "mongod" is expected to be running
+rspec ./spec/db/db_spec.rb:9 # Service "mongod" is expected to be enabled
+rspec ./spec/db/db_spec.rb:13 # Port "27017" is expected to be listening on 0.0.0.0
+
+/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby -I/Library/Ruby/Gems/2.3.0/gems/rspec-support-3.9.3/lib:/Library/Ruby/Gems/2.3.0/gems/rspec-core-3.9.2/lib /Library/Ruby/Gems/2.3.0/gems/rspec-core-3.9.2/exe/rspec --pattern spec/db/\*_spec.rb failed
+Anaiss-MacBook-Pro:tests anaistang$
