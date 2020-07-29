@@ -15,7 +15,7 @@ sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org
 
 # Step 5 removing the default conf and replacing with our configuration
 sudo rm /etc/mongod.conf
-sudo ln -s /home/ubuntu/environment/db/mongod.conf /etc/mongod.conf
+sudo ln -s /home/vagrant/environment/db/mongod.conf /etc/mongod.conf
 
 #Step 5: Getting MongoDB set up
 sudo sed -i "s,\\(^[[:blank:]]*bindIp:\\) .*,\\1 0.0.0.0," /etc/mongod.conf
