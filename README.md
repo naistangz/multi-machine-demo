@@ -11,7 +11,8 @@ required_plugins.each do |plugin|
 end
 
 Vagrant.configure("2") do |config|
-  config.vm.define "app" do |app|
+ # configuring the machine app 
+ config.vm.define "app" do |app|
     app.vm.box = "ubuntu/xenial64"
     app.vm.network "private_network", ip: "192.168.10.100"
     app.hostsupdater.aliases = ["development.local"]
@@ -22,13 +23,10 @@ Vagrant.configure("2") do |config|
   config.vm.define "db" do |db|
     db.vm.box = "ubuntu/xenial64"
     db.vm.network "private_network", ip: "192.168.10.150"
-    db.hostsupdater.aliases = ["development.local"]
-    db.vm.synced_folder "app", "/home/ubuntu/db"
-    db.vm.provision "shell", path: "environment/app/dbprovision.sh", privileged: false
- end
+    db.vm.provision "shell", path: "environment/app/provision.sh", privileged: false
+  end
   
 end
-
 ```
 
 # Provisioning the db machine with a `MongoDB database`
@@ -37,12 +35,11 @@ end
 └── multi-machine-demo
     └── environment
         └──  app
-              ├── dbprovision.sh
               ├── provision.sh
               └── ubuntu-xenial-16.04-cloudimg-console.log           
 ```
 
-**dbprovision.sh**
+**provision.sh**
 
 ```bash
 # Install mongodb
@@ -73,6 +70,7 @@ sudo systemctl enable mongod
 ```bash
 sudo systemctl enable mongodb
 ```
+![mongodb_testpass](mongodb_testpass.jpeg)
 
 # Configuring and Connect MongoDB
 Open mongo shell 
