@@ -99,3 +99,6 @@ Checking the databases
 ```bash
 > show dbs
 ```
+
+---
+
